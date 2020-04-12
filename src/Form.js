@@ -1,23 +1,30 @@
 import React from "react";
 import "./App.css";
 
-/* Import Components */
-import Input from "./components/Input";
-import Select from "./components/Select";
-import Button from "./components/Button";
+/* Import Views */
+import StepOne from './View/StepOne'
+import StepTwo from './View/StepOne'
 
 class Form extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
+      step: 1, 
+
+      // Step 1 
       User: {
         weight: "",
         gender: "",
         time: ""
       },
+
+      genderOptions: [Male, Female],
+      godziny: [],
+
+      // Step 2 
+
       Big_Beer: {
-        title: "Big Beer", amount: 0, milliliters: 500, gramsOfAlcohol: 20 
+        title: "Big Beer", amount: 0, milliliters: 500, gramsOfAlcohol: 20
       },
       Small_Beer: {
         title: "Small Beer", amount: 0, milliliters: 350, gramsOfAlcohol: 15
@@ -31,22 +38,60 @@ class Form extends React.Component {
       Vodka: {
         title: "vodka", amount: 0, milliliters: 50, gramsOfAlcohol: 18
       },
-      genderOptions: ["Male", "Female"],
-      godziny:[]
+      
     };
-    this.handleWeight = this.handleWeight.bind(this);
-    this.handleClearForm = this.handleClearForm.bind(this);
-    this.handleInput = this.handleInput.bind(this);
-    this.handleTime = this.handleTime.bind(this);
-    this.handleBigBeer = this.handleBigBeer.bind(this);
-    this.handleSmallBeer = this.handleSmallBeer.bind(this);
-    this.handleChampagne = this.handleChampagne.bind(this);
-    this.handleVodka = this.handleVodka.bind(this);
-    this.handleWine = this.handleWine.bind(this);
-    this.handleFormSubmit = this.handleFormSubmit.bind(this);
   }
 
-  handleInput(e) {
+  showStep = () => {
+    const {step} = this.state;
+    if(step === 1)
+      return (<StepOne weight={this.state.User.weight}
+      handleWeight={this.handleWeight}
+      genderOptions={this.state.genderOptions}
+      gender={this.state.User.gender}
+      handleInput={this.handleInput}
+      time={this.state.User.time}
+      handleTime={this.handleTime}
+      nextStep={this.nextStep}
+      />);
+      if(step === 2)
+      return (<StepTwo Big_Beer_title={this.state.Big_Beer.title}
+        Big_Beer_amount={this.state.Big_Beer.amount}
+        handleBigBeer={this.handleBigBeer}
+        Small_Beer_title={this.state.Small_Beer.title}
+        Small_Beer_amount={this.state.Small_Beer.amount}
+        handleSmallBeer={this.handleSmallBeer}
+        Vodka_title={this.state.Vodka.title}
+        Vodka_amount={this.state.Vodka.amount}
+        handleVodka={this.handleVodka}
+        Wine_title={this.state.Wine.title}
+        Wine_amount={this.state.Wine.amount}
+        handleWine={this.handleWine}
+        Champagne_title={this.state.Champagne.title}
+        Champagne_amount={this.state.Champagne.amount}
+        handleFormSubmit={this.handleFormSubmit}
+        handleClearForm={this.handleClearForm}
+      />); 
+  }
+
+  nextStep = () => {
+    const {step} = this.state;
+    this.setState({
+      ...this.state,
+      step:step+1
+    });
+  }
+
+  previousStep = (e) => {
+    e.preventDefault();
+    const {step} = this.state;
+    this.setState({
+      step:step-1
+    })
+  }
+
+
+  handleInput = e => {
     let value = e.target.value;
     let name = e.target.name;
     this.setState({
@@ -58,7 +103,7 @@ class Form extends React.Component {
     });
   }
 
-  handleWeight(e) {
+  handleWeight = e => {
     let value = e.target.value;
     this.setState({
       ...this.state,
@@ -69,7 +114,7 @@ class Form extends React.Component {
     });
   }
 
-  handleBigBeer(e) {
+  handleBigBeer = e => {
     let value = e.target.value;
     this.setState({
       ...this.state,
@@ -80,7 +125,7 @@ class Form extends React.Component {
     });
   }
 
-  handleSmallBeer(e) {
+  handleSmallBeer = e => {
     let value = e.target.value;
     this.setState({
       ...this.state,
@@ -91,7 +136,7 @@ class Form extends React.Component {
     });
   }
 
-  handleVodka(e) {
+  handleVodka = e => {
     let value = e.target.value;
     this.setState({
       ...this.state,
@@ -102,7 +147,7 @@ class Form extends React.Component {
     });
   }
 
-  handleChampagne(e) {
+  handleChampagne = e => {
     let value = e.target.value;
     this.setState({
       ...this.state,
@@ -113,7 +158,7 @@ class Form extends React.Component {
     });
   }
 
-  handleWine(e) {
+  handleWine = e => {
     let value = e.target.value;
     this.setState({
       ...this.state,
@@ -124,7 +169,7 @@ class Form extends React.Component {
     });
   }
 
-  handleTime(e) {
+  handleTime = e => {
     let value = e.target.value;
     this.setState({
       ...this.state,
@@ -134,12 +179,8 @@ class Form extends React.Component {
       }
     });
   }
-  calculator(e) {
-    e.preventDefault();
-     
-  }
 
-  handleFormSubmit(e) {
+  handleFormSubmit = e => {
     e.preventDefault();
     const { weight, gender, time } = this.state.User;
     const liczba = this.state.Big_Beer.amount * this.state.Big_Beer.gramsOfAlcohol
@@ -149,23 +190,39 @@ class Form extends React.Component {
     const liczba5 = this.state.Vodka.amount * this.state.Vodka.gramsOfAlcohol
     const alkohol = liczba + liczba2 + liczba3 + liczba4 + liczba5
 
-    var wynik = 0;
+    var wyniki = []
+    var wynik = 0
     if (gender === "Male") {
-      for(let i=0;;i++){
-        if(wynik < 0){
-          console.log("trzezwy")
+      for (let i = 0; wynik >= 0; i++) {
+        if (wynik < 0) {
           break
         } else {
-        wynik = (((0.806 *(((alkohol)-(i*10))/10) * 1.2)/(0.58 * weight)-(0.015*time))*10);
-        
-        this.state.godziny.push(wynik)
+          wynik = (((0.806 * (((alkohol) - (i * 10)) / 10) * 1.2) / (0.58 * weight) - (0.015 * time)) * 10);
+          if (wynik > 0) {
+            wyniki.push(wynik.toFixed(2))
+          }
         }
+        this.setState({
+          godziny: wyniki
+        });
       }
     } else {
-      console.log(((0.806 *(alkohol/10) * 1.2)/(0.49 * weight)-(0.017*time))*10)
+      for (let i = 0; wynik >= 0; i++) {
+      if (wynik < 0) {
+        break
+      } else {
+        wynik = (((0.806 * (((alkohol) - (i * 10)) / 10) * 1.2) / (0.49 * weight) - (0.017 * time)) * 10);
+        if (wynik > 0) {
+          wyniki.push(wynik.toFixed(2))
+        }
+      }
+      this.setState({
+        godziny: wyniki
+      });
+    }
     }
   }
-  handleClearForm(e) {
+  handleClearForm = e => {
     e.preventDefault();
     this.setState({
       User: {
@@ -184,89 +241,15 @@ class Form extends React.Component {
   }
 
   render() {
+    const {step} = this.state;
     return (
       <div className="calculator">
+        <h2>Step {step} of 3.</h2>
         <form className="container-fluid">
-          <Input
-            inputType={"number"}
-            name={"Weight"}
-            title={"Weight"}
-            placeholder={"Enter your weight"}
-            value={this.state.User.weight}
-            handleChange={this.handleWeight}
-          />
-          <Select
-            title={"Gender"}
-            name={"gender"}
-            placeholder={"Select Gender"}
-            options={this.state.genderOptions}
-            value={this.state.User.gender}
-            handleChange={this.handleInput}
-          />
-          <Input
-            inputType={"number"}
-            name={"time"}
-            title={"Time"}
-            placeholder={"drinking time in hours"}
-            value={this.state.User.time}
-            handleChange={this.handleTime}
-          />
-          <Input
-            inputType={"number"}
-            name={this.state.Big_Beer.title}
-            title={this.state.Big_Beer.title}
-            placeholder={"Enter your amount"}
-            value={this.state.Big_Beer.amount}
-            handleChange={this.handleBigBeer}
-          />
-          <Input
-            inputType={"number"}
-            name={this.state.Small_Beer.title}
-            title={this.state.Small_Beer.title}
-            placeholder={"Enter your amount"}
-            value={this.state.Small_Beer.amount}
-            handleChange={this.handleSmallBeer}
-          />
-          <Input
-            inputType={"number"}
-            name={this.state.Vodka.title}
-            title={this.state.Vodka.title}
-            placeholder={"Enter your amount"}
-            value={this.state.Vodka.amount}
-            handleChange={this.handleVodka}
-          />
-          <Input
-            inputType={"number"}
-            name={this.state.Wine.title}
-            title={this.state.Wine.title}
-            placeholder={"Enter your amount"}
-            value={this.state.Wine.amount}
-            handleChange={this.handleWine}
-          />
-          <Input
-            inputType={"number"}
-            name={this.state.Champagne.title}
-            title={this.state.Champagne.title}
-            placeholder={"Enter your amount"}
-            value={this.state.Champagne.amount}
-            handleChange={this.handleChampagne}
-          />
-          <Button
-            action={this.handleFormSubmit}
-            type={"primary"}
-            title={"Submit"}
-          />{" "}
-          {/*Submit */}
-          <Button
-            action={this.handleClearForm}
-            type={"secondary"}
-            title={"Clear"}
-          />{" "}
-        </form>
+          {this.showStep()}
+        </form> 
         <ul>
-          {this.state.godziny.map((value,index)=>{
-           return <li key={index}>Po {index} godzinach picia twoj pozom stezenia alkoholu we krwi wynosi {value}</li>
-          })}
+          
         </ul>
       </div>
     );
