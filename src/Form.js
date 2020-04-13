@@ -4,12 +4,15 @@ import "./App.css";
 /* Import Views */
 import StepOne from './View/StepOne'
 import StepTwo from './View/StepOne'
+import StepThree from './View/StepThree'
+
+
 
 class Form extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      step: 1, 
+      step: 1,
 
       // Step 1 
       User: {
@@ -18,43 +21,50 @@ class Form extends React.Component {
         time: ""
       },
 
-      genderOptions: [Male, Female],
+      genderOptions: ["Male", "Female"],
       godziny: [],
 
       // Step 2 
 
       Big_Beer: {
-        title: "Big Beer", amount: 0, milliliters: 500, gramsOfAlcohol: 20
+        name:"Big_Beer", title: "Big Beer", amount: 0, milliliters: 500, gramsOfAlcohol: 20
       },
       Small_Beer: {
-        title: "Small Beer", amount: 0, milliliters: 350, gramsOfAlcohol: 15
+        name:"Small_Beer", title: "Small Beer", amount: 0, milliliters: 350, gramsOfAlcohol: 15
       },
       Wine: {
-        title: "Wine", amount: 0, milliliters: 250, gramsOfAlcohol: 25
+        name:"Wine", title: "Wine", amount: 0, milliliters: 250, gramsOfAlcohol: 25
       },
       Champagne: {
-        title: "Champagne", amount: 0, milliliters: 125, gramsOfAlcohol: 12
+        name:"Champagne", title: "Champagne", amount: 0, milliliters: 125, gramsOfAlcohol: 12
       },
       Vodka: {
-        title: "vodka", amount: 0, milliliters: 50, gramsOfAlcohol: 18
+        name:"Vodka", title: "vodka", amount: 0, milliliters: 50, gramsOfAlcohol: 18
       },
-      
+      // Errors
+
+      formErrors: {
+        weight: "",
+        gender:"",
+        time:""
+      }
+
     };
   }
 
   showStep = () => {
-    const {step} = this.state;
-    if(step === 1)
+    const { step } = this.state;
+    if (step === 1)
       return (<StepOne weight={this.state.User.weight}
-      handleWeight={this.handleWeight}
-      genderOptions={this.state.genderOptions}
-      gender={this.state.User.gender}
-      handleInput={this.handleInput}
-      time={this.state.User.time}
-      handleTime={this.handleTime}
-      nextStep={this.nextStep}
+        handleWeight={this.handleInput}
+        genderOptions={this.state.genderOptions}
+        gender={this.state.User.gender}
+        handleInput={this.handleInput}
+        time={this.state.User.time}
+        handleTime={this.handleTime}
+        nextStep={this.nextStep}
       />);
-      if(step === 2)
+    if (step === 2)
       return (<StepTwo Big_Beer_title={this.state.Big_Beer.title}
         Big_Beer_amount={this.state.Big_Beer.amount}
         handleBigBeer={this.handleBigBeer}
@@ -71,23 +81,26 @@ class Form extends React.Component {
         Champagne_amount={this.state.Champagne.amount}
         handleFormSubmit={this.handleFormSubmit}
         handleClearForm={this.handleClearForm}
-      />); 
+      />);
+    if (step === 3)
+      return ( <StepThree godziny={this.state.godziny}/>
+      )
   }
 
   nextStep = () => {
-    const {step} = this.state;
+    const { step } = this.state;
     this.setState({
       ...this.state,
-      step:step+1
+      step: step + 1
     });
   }
 
-  previousStep = (e) => {
-    e.preventDefault();
-    const {step} = this.state;
+  previousStep = () => {
+    const { step } = this.state;
     this.setState({
-      step:step-1
-    })
+      ...this.state,
+      step: step - 1
+    });
   }
 
 
@@ -103,23 +116,13 @@ class Form extends React.Component {
     });
   }
 
-  handleWeight = e => {
+  handleAlcohol = e => {
     let value = e.target.value;
+    let name = e.target.name;
     this.setState({
       ...this.state,
-      User: {
-        ...this.state.User,
-        weight: value
-      }
-    });
-  }
-
-  handleBigBeer = e => {
-    let value = e.target.value;
-    this.setState({
-      ...this.state,
-      Big_Beer: {
-        ...this.state.Big_Beer,
+      name: {
+        ...this.state.name,
         amount: value
       }
     });
@@ -208,18 +211,18 @@ class Form extends React.Component {
       }
     } else {
       for (let i = 0; wynik >= 0; i++) {
-      if (wynik < 0) {
-        break
-      } else {
-        wynik = (((0.806 * (((alkohol) - (i * 10)) / 10) * 1.2) / (0.49 * weight) - (0.017 * time)) * 10);
-        if (wynik > 0) {
-          wyniki.push(wynik.toFixed(2))
+        if (wynik < 0) {
+          break
+        } else {
+          wynik = (((0.806 * (((alkohol) - (i * 10)) / 10) * 1.2) / (0.49 * weight) - (0.017 * time)) * 10);
+          if (wynik > 0) {
+            wyniki.push(wynik.toFixed(2))
+          }
         }
+        this.setState({
+          godziny: wyniki
+        });
       }
-      this.setState({
-        godziny: wyniki
-      });
-    }
     }
   }
   handleClearForm = e => {
@@ -241,16 +244,13 @@ class Form extends React.Component {
   }
 
   render() {
-    const {step} = this.state;
+    const { step } = this.state;
     return (
       <div className="calculator">
         <h2>Step {step} of 3.</h2>
         <form className="container-fluid">
           {this.showStep()}
-        </form> 
-        <ul>
-          
-        </ul>
+        </form>
       </div>
     );
   }

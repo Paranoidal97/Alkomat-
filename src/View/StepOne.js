@@ -10,14 +10,14 @@ const StepOne = props => {
       <div>
           <Input
           inputType={"number"}
-            name={"Weight"}
-            title={"Weight"}
+            name={"weight"}
+            title={"weight"}
             placeholder={"Enter your weight"}
             value={props.weight}
             handleChange={props.handleWeight}
           />
           <Select
-            title={"Gender"}
+            title={"gender"}
             name={"gender"}
             placeholder={"Select Gender"}
             options={props.genderOptions}
