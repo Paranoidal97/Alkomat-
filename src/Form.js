@@ -3,9 +3,8 @@ import "./App.css";
 
 /* Import Views */
 import StepOne from './View/StepOne'
-import StepTwo from './View/StepOne'
+import StepTwo from './View/StepTwo'
 import StepThree from './View/StepThree'
-
 
 
 class Form extends React.Component {
@@ -18,29 +17,17 @@ class Form extends React.Component {
       User: {
         weight: "",
         gender: "",
-        time: ""
+        time: "",
+        Big_Beer:"",
+        Small_Beer:"",
+        Wine:"",
+        Champagne:"",
+        Vodka:"",
       },
 
       genderOptions: ["Male", "Female"],
       godziny: [],
 
-      // Step 2 
-
-      Big_Beer: {
-        name:"Big_Beer", title: "Big Beer", amount: 0, milliliters: 500, gramsOfAlcohol: 20
-      },
-      Small_Beer: {
-        name:"Small_Beer", title: "Small Beer", amount: 0, milliliters: 350, gramsOfAlcohol: 15
-      },
-      Wine: {
-        name:"Wine", title: "Wine", amount: 0, milliliters: 250, gramsOfAlcohol: 25
-      },
-      Champagne: {
-        name:"Champagne", title: "Champagne", amount: 0, milliliters: 125, gramsOfAlcohol: 12
-      },
-      Vodka: {
-        name:"Vodka", title: "vodka", amount: 0, milliliters: 50, gramsOfAlcohol: 18
-      },
       // Errors
 
       formErrors: {
@@ -65,20 +52,8 @@ class Form extends React.Component {
         nextStep={this.nextStep}
       />);
     if (step === 2)
-      return (<StepTwo Big_Beer_title={this.state.Big_Beer.title}
-        Big_Beer_amount={this.state.Big_Beer.amount}
-        handleBigBeer={this.handleBigBeer}
-        Small_Beer_title={this.state.Small_Beer.title}
-        Small_Beer_amount={this.state.Small_Beer.amount}
-        handleSmallBeer={this.handleSmallBeer}
-        Vodka_title={this.state.Vodka.title}
-        Vodka_amount={this.state.Vodka.amount}
-        handleVodka={this.handleVodka}
-        Wine_title={this.state.Wine.title}
-        Wine_amount={this.state.Wine.amount}
-        handleWine={this.handleWine}
-        Champagne_title={this.state.Champagne.title}
-        Champagne_amount={this.state.Champagne.amount}
+      return (<StepTwo 
+        handleInput={this.handleInput}
         handleFormSubmit={this.handleFormSubmit}
         handleClearForm={this.handleClearForm}
       />);
@@ -112,62 +87,6 @@ class Form extends React.Component {
       User: {
         ...this.state.User,
         [name]: value
-      }
-    });
-  }
-
-  handleAlcohol = e => {
-    let value = e.target.value;
-    let name = e.target.name;
-    this.setState({
-      ...this.state,
-      name: {
-        ...this.state.name,
-        amount: value
-      }
-    });
-  }
-
-  handleSmallBeer = e => {
-    let value = e.target.value;
-    this.setState({
-      ...this.state,
-      Small_Beer: {
-        ...this.state.Small_Beer,
-        amount: value
-      }
-    });
-  }
-
-  handleVodka = e => {
-    let value = e.target.value;
-    this.setState({
-      ...this.state,
-      Vodka: {
-        ...this.state.Vodka,
-        amount: value
-      }
-    });
-  }
-
-  handleChampagne = e => {
-    let value = e.target.value;
-    this.setState({
-      ...this.state,
-      Champagne: {
-        ...this.state.Champagne,
-        amount: value
-      }
-    });
-  }
-
-  handleWine = e => {
-    let value = e.target.value;
-    this.setState({
-      ...this.state,
-      Wine: {
-        ...this.state.Wine,
-        amount: value
       }
     });
   }
@@ -225,6 +144,7 @@ class Form extends React.Component {
       }
     }
   }
+  
   handleClearForm = e => {
     e.preventDefault();
     this.setState({

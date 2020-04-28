@@ -1,26 +1,21 @@
 import React from "react";
 
-class Alcohol extends React.Component {
-
-    render(){
-        const {title, inputType, value, placeholder, handleChange } = this.props;
-
-  return (
-    <div className="form-group">
-      <label className="form-label" htmlFor={this.props.item.title}>
-        {this.props.item.title}
-      </label>
-      <input
-        className="form-control"
-        name={title}
-        type={inputType}
-        value={value}
-        onChange={handleChange}
-        placeholder={placeholder}
-      />
-    </div>
-  );
-}
-};
+const Alcohol =[
+  {
+    name:"Big_Beer", title: "Big Beer", amount: 0, milliliters: 500, gramsOfAlcohol: 20
+  },
+  {
+    name:"Small_Beer", title: "Small Beer", amount: 0, milliliters: 350, gramsOfAlcohol: 15
+  },
+  {
+    name:"Wine", title: "Wine", amount: 0, milliliters: 250, gramsOfAlcohol: 25
+  },
+  {
+    name:"Champagne", title: "Champagne", amount: 0, milliliters: 125, gramsOfAlcohol: 12
+  },
+  {
+    name:"Vodka", title: "vodka", amount: 0, milliliters: 50, gramsOfAlcohol: 18
+  },
+]
 
  export default Alcohol;
