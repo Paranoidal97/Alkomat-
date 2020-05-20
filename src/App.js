@@ -1,17 +1,23 @@
 import React from "react";
 import "./App.css";
-
+import image from "./image.svg";
 
 /* Import Components */
 import Form from "./Form";
 
 function App() {
   return (
-    <div className="row justify-content-center">
-      <div className="col-md-6 ">
-        <h3> Kalkulator Promili </h3>
-        <Form/>
+    <div className="main">
+      <div className="main-container">
+        <div className="row">
+        <div className="col-md-6 pic">
+          <img src={image} />
+        </div>
+        <div className="col-md-6">
+          <Form /></div>
       </div>
+        </div>
+        
     </div>
   )
 }

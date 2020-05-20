@@ -10,11 +10,12 @@ const StepTwo = props => {
     <div>
       {Alcohol.map(e => {
         return (<Input
+          key={e.name}
           inputType={"number"}
-          name={e.title}
+          name={e.name}
           title={e.title}
           placeholder={"Enter your amount"}
-          value={e.amount}
+          value={props[e.title]}
           handleChange={props.handleInput} />)
       })}
       <Button

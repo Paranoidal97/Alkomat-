@@ -11,27 +11,27 @@ const StepOne = props => {
           <Input
           inputType={"number"}
             name={"weight"}
-            title={"weight"}
+            title={"Weight"}
             placeholder={"Enter your weight"}
             value={props.weight}
-            handleChange={props.handleWeight}
-          />
-          <Select
-            title={"gender"}
-            name={"gender"}
-            placeholder={"Select Gender"}
-            options={props.genderOptions}
-            value={props.gender}
             handleChange={props.handleInput}
           />
+          <div>{props.weighterror}</div>
+          <Select
+            title={"Gender"}
+            name={"gender"}
+            placeholder={"Select Gender"}
+            value={props.gender}
+            handleChange={props.handleInput}
+          /><div>{props.gendererror}</div>
           <Input
             inputType={"number"}
             name={"time"}
             title={"Time"}
-            placeholder={"drinking time in hours"}
+            placeholder={"Drinking time in hours"}
             value={props.time}
-            handleChange={props.handleTime}
-          />
+            handleChange={props.handleInput}
+          /><div>{props.timeerror}</div>
             <Button
             action={props.nextStep}
             type={"primary"}

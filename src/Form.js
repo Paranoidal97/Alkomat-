@@ -1,6 +1,7 @@
 import React from "react";
 import "./App.css";
 
+import Alcohol from './components/Alcohol';
 /* Import Views */
 import StepOne from './View/StepOne'
 import StepTwo from './View/StepTwo'
@@ -15,22 +16,20 @@ class Form extends React.Component {
 
       // Step 1 
       User: {
-        weight: "",
+        weight: 0,
         gender: "",
-        time: "",
-        Big_Beer:"",
-        Small_Beer:"",
-        Wine:"",
-        Champagne:"",
-        Vodka:"",
+        time: 0,
+        godziny:[],
+        Big_Beer:0,
+        Small_Beer:0,
+        Wine:0,
+        Champagne:0,
+        Vodka:0,
       },
-
-      genderOptions: ["Male", "Female"],
-      godziny: [],
 
       // Errors
 
-      formErrors: {
+      Errors: {
         weight: "",
         gender:"",
         time:""
@@ -43,23 +42,30 @@ class Form extends React.Component {
     const { step } = this.state;
     if (step === 1)
       return (<StepOne weight={this.state.User.weight}
-        handleWeight={this.handleInput}
-        genderOptions={this.state.genderOptions}
-        gender={this.state.User.gender}
         handleInput={this.handleInput}
+        gender={this.state.User.gender}
         time={this.state.User.time}
-        handleTime={this.handleTime}
         nextStep={this.nextStep}
+        weighterror={this.state.Errors.weight}
+        gendererror={this.state.Errors.gender}
+        timeerror={this.state.Errors.time}
       />);
     if (step === 2)
-      return (<StepTwo 
-        handleInput={this.handleInput}
-        handleFormSubmit={this.handleFormSubmit}
-        handleClearForm={this.handleClearForm}
-      />);
+    return (<StepTwo 
+      Big_Beer={this.state.User.Big_Beer}
+      Small_Beer={this.state.User.Small_Beer}
+      Wine={this.state.User.Wine}
+      Champagne={this.state.User.Champagne}
+      Vodka={this.state.User.Vodka}
+      handleInput={this.handleInput}
+      handleFormSubmit={this.handleFormSubmit}
+      handleClearForm={this.handleClearForm}
+    />);
     if (step === 3)
-      return ( <StepThree godziny={this.state.godziny}/>
-      )
+      return (<StepThree 
+        maping={this.state.User.godziny}
+      />);
+     
   }
 
   nextStep = () => {
@@ -82,6 +88,20 @@ class Form extends React.Component {
   handleInput = e => {
     let value = e.target.value;
     let name = e.target.name;
+    let errors = this.state.Errors;
+
+    switch(name){
+      case'weight':
+        errors.weight = value <= 0 ? 'enter number' : '';
+        break;
+        case'gender':
+        errors.gender = this.state.gender="" ? 'enter number' : '';
+        break;
+        case'time':
+        errors.time = value <= 0 ? 'enter number' : '';
+        break;
+    }
+
     this.setState({
       ...this.state,
       User: {
@@ -91,84 +111,87 @@ class Form extends React.Component {
     });
   }
 
-  handleTime = e => {
-    let value = e.target.value;
-    this.setState({
-      ...this.state,
-      User: {
-        ...this.state.User,
-        time: value
-      }
-    });
-  }
-
   handleFormSubmit = e => {
     e.preventDefault();
-    const { weight, gender, time } = this.state.User;
-    const liczba = this.state.Big_Beer.amount * this.state.Big_Beer.gramsOfAlcohol
-    const liczba2 = this.state.Small_Beer.amount * this.state.Small_Beer.gramsOfAlcohol
-    const liczba3 = this.state.Wine.amount * this.state.Wine.gramsOfAlcohol
-    const liczba4 = this.state.Champagne.amount * this.state.Champagne.gramsOfAlcohol
-    const liczba5 = this.state.Vodka.amount * this.state.Vodka.gramsOfAlcohol
+    const { weight, gender, time, Big_Beer, Small_Beer, Wine, Champagne, Vodka } = this.state.User;
+    const liczba = Big_Beer * Alcohol[0].gramsOfAlcohol
+    const liczba2 = Small_Beer * Alcohol[1].gramsOfAlcohol
+    const liczba3 = Wine * Alcohol[2].gramsOfAlcohol
+    const liczba4 = Champagne * Alcohol[3].gramsOfAlcohol
+    const liczba5 = Vodka * Alcohol[4].gramsOfAlcohol
     const alkohol = liczba + liczba2 + liczba3 + liczba4 + liczba5
 
-    var wyniki = []
+    let godzinyy = this.state.User.godziny
     var wynik = 0
     if (gender === "Male") {
       for (let i = 0; wynik >= 0; i++) {
         if (wynik < 0) {
-          break
+          console.log(godzinyy)
         } else {
           wynik = (((0.806 * (((alkohol) - (i * 10)) / 10) * 1.2) / (0.58 * weight) - (0.015 * time)) * 10);
           if (wynik > 0) {
-            wyniki.push(wynik.toFixed(2))
+            godzinyy.push(wynik.toFixed(2))
           }
         }
-        this.setState({
-          godziny: wyniki
-        });
       }
     } else {
       for (let i = 0; wynik >= 0; i++) {
-        if (wynik < 0) {
-          break
+        if (wynik < 0) { 
+          console.log(godzinyy)
         } else {
           wynik = (((0.806 * (((alkohol) - (i * 10)) / 10) * 1.2) / (0.49 * weight) - (0.017 * time)) * 10);
           if (wynik > 0) {
-            wyniki.push(wynik.toFixed(2))
+            godzinyy.push(wynik.toFixed(2))
           }
         }
-        this.setState({
-          godziny: wyniki
-        });
+        
       }
     }
+    this.setState({
+      ...this.state,
+      User: {
+        ...this.state.User,
+        godziny: godzinyy
+      }
+    });
+    this.nextStep()
   }
   
   handleClearForm = e => {
     e.preventDefault();
     this.setState({
+      step: 1,
+
+      // Step 1 
       User: {
-        weight: "",
+        weight: 0,
         gender: "",
-        time: ""
+        time: 0,
+        godziny:[],
+        Big_Beer:0,
+        Small_Beer:0,
+        Wine:0,
+        Champagne:0,
+        Vodka:0,
       },
-      products: [
-        { id: "1", title: "Big Beer", amount: "", milliliters: 500 },
-        { id: "2", title: "Small Beer", amount: "", milliliters: 350 },
-        { id: "3", title: "Wine", amount: "", milliliters: 175 },
-        { id: "4", title: "Champagne", amount: "", milliliters: 120 },
-        { id: "5", title: "vodka", amount: "", milliliters: 50 }
-      ]
+
+      // Errors
+
+      Errors: {
+        weight: "",
+        gender:"",
+        time:""
+      }
+
     });
   }
-
+  
   render() {
     const { step } = this.state;
     return (
-      <div className="calculator">
+      <div >
         <h2>Step {step} of 3.</h2>
-        <form className="container-fluid">
+        <form >
           {this.showStep()}
         </form>
       </div>
