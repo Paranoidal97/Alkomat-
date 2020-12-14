@@ -6,7 +6,7 @@ const StepThree = props => {
     <div>
           {props.maping.map((item) => {
             let HourseAfter = props.maping.indexOf(item);
-            return <li key={HourseAfter}>Po {HourseAfter} godzinach od skończenia picia twoja zawartośc alkoholu we krwi wynosi {item}</li>
+            return <li key={HourseAfter}>{HourseAfter} hours after the end of drinking, your blood alcohol contentration will be {item}</li>
     
           })}
         </div>)

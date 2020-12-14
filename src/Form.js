@@ -26,15 +26,6 @@ class Form extends React.Component {
         Champagne:0,
         Vodka:0,
       },
-
-      // Errors
-
-      Errors: {
-        weight: "",
-        gender:"",
-        time:""
-      }
-
     };
   }
 
@@ -46,9 +37,6 @@ class Form extends React.Component {
         gender={this.state.User.gender}
         time={this.state.User.time}
         nextStep={this.nextStep}
-        weighterror={this.state.Errors.weight}
-        gendererror={this.state.Errors.gender}
-        timeerror={this.state.Errors.time}
       />);
     if (step === 2)
     return (<StepTwo 
@@ -88,19 +76,6 @@ class Form extends React.Component {
   handleInput = e => {
     let value = e.target.value;
     let name = e.target.name;
-    let errors = this.state.Errors;
-
-    switch(name){
-      case'weight':
-        errors.weight = value <= 0 ? 'enter number' : '';
-        break;
-        case'gender':
-        errors.gender = this.state.gender="" ? 'enter number' : '';
-        break;
-        case'time':
-        errors.time = value <= 0 ? 'enter number' : '';
-        break;
-    }
 
     this.setState({
       ...this.state,
@@ -174,14 +149,6 @@ class Form extends React.Component {
         Champagne:0,
         Vodka:0,
       },
-
-      // Errors
-
-      Errors: {
-        weight: "",
-        gender:"",
-        time:""
-      }
 
     });
   }
