@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/Virtual-Breathalyzer/static/css/main.8b6dae69.chunk.css",
+    "main.js": "/Virtual-Breathalyzer/static/js/main.1395942c.chunk.js",
+    "main.js.map": "/Virtual-Breathalyzer/static/js/main.1395942c.chunk.js.map",
+    "runtime-main.js": "/Virtual-Breathalyzer/static/js/runtime-main.21c579b5.js",
+    "runtime-main.js.map": "/Virtual-Breathalyzer/static/js/runtime-main.21c579b5.js.map",
+    "static/js/2.16ba4900.chunk.js": "/Virtual-Breathalyzer/static/js/2.16ba4900.chunk.js",
+    "static/js/2.16ba4900.chunk.js.map": "/Virtual-Breathalyzer/static/js/2.16ba4900.chunk.js.map",
+    "index.html": "/Virtual-Breathalyzer/index.html",
+    "precache-manifest.01d58ef6250df60010178640749ad8ab.js": "/Virtual-Breathalyzer/precache-manifest.01d58ef6250df60010178640749ad8ab.js",
+    "service-worker.js": "/Virtual-Breathalyzer/service-worker.js",
+    "static/css/main.8b6dae69.chunk.css.map": "/Virtual-Breathalyzer/static/css/main.8b6dae69.chunk.css.map",
+    "static/js/2.16ba4900.chunk.js.LICENSE": "/Virtual-Breathalyzer/static/js/2.16ba4900.chunk.js.LICENSE",
+    "static/media/image.svg": "/Virtual-Breathalyzer/static/media/image.5de98979.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.21c579b5.js",
+    "static/js/2.16ba4900.chunk.js",
+    "static/css/main.8b6dae69.chunk.css",
+    "static/js/main.1395942c.chunk.js"
+  ]
+}
