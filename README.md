@@ -21,7 +21,6 @@
 *** https://www.markdownguide.org/basic-syntax/#reference-style-links
 -->
 
-[![LinkedIn][linkedin-shield]][https://www.linkedin.com/in/%C5%82ukasz-rams-b2396b125/]
 
 
 
@@ -36,7 +35,7 @@
     My first project written in React.js
     <br />
     <br />
-    <a href="https://github.com/github_username/repo_name">View Demo</a>
+    <a href="https://paranoidal97.github.io/Virtual-Breathalyzer/">View Demo</a>
   </p>
 </p>
 
@@ -66,7 +65,9 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+ <a href="https://paranoidal97.github.io/Virtual-Breathalyzer/">
+    <img src="./src/images/website.png" alt="Logo" width="500" height="5000">
+  </a>
 
 The virtual breathalyzer was created on the basis of an algorithm found in one of the newspapers. Unfortunately, the algorithm is not accurate but it was an excellent exercise to improve my skills.
 
